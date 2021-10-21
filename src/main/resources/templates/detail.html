@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>UPS - details</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            /*background-image: url("../static/images/traffic.jpg");*/
+            background-image: url("images/traffic.jpg");
+            background-size: 100%;
+            background-repeat: repeat;
+        }
+
+        @keyframes
+        raiseUp {
+            0% {
+                transform: translateY(100%);
+                transition: opacity;
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes
+        expand {
+            0% {
+                transform: scaleY(0);
+                transition: opacity;
+                opacity: 0;
+            }
+            100% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+        }
+        .wrap {
+            background: rgb(255, 255, 255);
+            animation: 200ms ease-out 200ms 1 expand;
+            width: 15%;
+            margin-left: 39%;
+            padding: 2%;
+            border-radius: 20px;
+        }
+
+        .title {
+            margin-left: 30%;
+            margin-right: 30%;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: xxx-large;
+            padding: 2%;
+            color: white;
+            background: rgba(0, 0, 0, .8);
+            border-radius: 10px;
+        }
+
+        .message {
+            text-align: center;
+            font-size: medium;
+        }
+
+        .form-group {
+            margin-top: 1%;
+            margin-bottom: 2%;
+        }
+
+        .info_lb {
+            font-size: large;
+            text-align: right;
+            color: #722b47;
+        }
+        .login_btn{
+            margin-left: 3%;
+            font-size: medium;
+        }
+        .tb-wrap {
+            padding: 5%;
+            animation: 400ms ease-out 200ms 1 raiseUp;
+            color: white;
+        }
+        .nav-top {
+            height: 30px;
+        }
+        .lg {
+            color: black;
+            background: white;
+            margin: 0;
+            padding: 5px;
+            text-align: center;
+            font-family: "Verdana";
+            font-size: medium;
+            height: 30px;
+        }
+        .login_btn1 {
+            margin-left: 10px;
+            display: block;
+            float: left;
+            width: 10%;
+            background-color: #ffb710;
+            border-radius: 0 0 10px 10px;
+            transition: height;
+            transition-duration: 300ms;
+            height: 105%;
+        }
+        .login_btn1:hover {
+            background-color: #cd930d;
+            text-decoration: none;
+            color: white;
+            height: 135%;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="main">
+        <div class="nav-top">
+            <a display = "inline-block" class = "lg login_btn1" type="button" th:href="@{/}" >MainPage</a>  
+            <a display = "inline-block" class = "lg login_btn1" type="button" th:href="@{/changeDestination}" >Change Destination</a>
+            <a display = "inline-block" class = "lg login_btn1" type="button" th:href="@{/comment}" >Comment</a>  
+        </div>
+        <h1 class="title">Shipment Detail </h1>
+        <div th:if="${message}">
+            <p class="message" th:text="${message}"></p>
+        </div>
+        <div class="tb-wrap">
+            <table class="table table-striped">
+<!--                <caption>ShipmentDetail</caption>-->
+                <thead style="font-size: large; background: black;">
+                    <tr>
+                        <th>Tracking ID</th>
+                        <th>Order ID</th>
+                        <th>Destination</th>
+                        <th>Distance</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size: medium; color: black; background-color: white">
+                    <tr>
+                       <td>
+                            <a th:text="${result.trackingID}" th:href="@{/detail(id=${result.trackingID})}"></a>
+                       </td>
+                       <td th:text="${result.shipID}"></td>
+                       <td th:text="'(' + ${result.destX} + ' ,' + ${result.destY} + ')'"></td>
+                       <td th:text="${result.distance}"></td>
+                       <td th:text="${result.status}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tb-wrap">
+            <table class="table table-striped">
+                <thead style="font-size: large; background: black;">
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Number</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size: medium; color: black; background-color: white">
+                    <tr th:each="product:${products}">
+                        <td th:text="${product.name}"></td>
+                        <td th:text="${product.description}"></td>
+                        <td th:text="${product.count}"></td>
+                     </tr>
+                </tbody>
+            </table>
+    
+            </table>
+        </div>
+
+    </div>
+
+    
+</body>
+
+</html>
